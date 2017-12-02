@@ -7,6 +7,10 @@ def run(app, xyzzy):
         CommentsSampler(xyzzy, 60),
     ]
 
+    print "Triggering initial sampling for %d samplers" % len(samplers)
+    for (i, sampler) in enumerate(samplers):
+        sampler._sample()
+
     try:
         app.run(debug=True,
                 host="0.0.0.0",
