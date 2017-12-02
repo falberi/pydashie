@@ -14,7 +14,7 @@ setup(
     packages=['pydashie',],
     install_requires=[
         'Flask >= 0.10',
-        'Coffeescript >= 1.0.8',
+        'Coffeescript <= 1.1.2',
         'pyScss >= 1.2.0'
     ],
     entry_points={
