@@ -2,3 +2,4 @@
 .pydevproject.txt
 *.pyc
 *Thumbs.db
+.ftpconfig
