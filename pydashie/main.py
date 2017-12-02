@@ -86,12 +86,34 @@ def javascripts():
 
 @app.route('/assets/application.css')
 def application_css():
+    from scss import Scss
     scripts = [
-        'assets/stylesheets/application.css',
+        'assets/stylesheets/font-awesome.css',
+        'assets/stylesheets/jquery.gridster.css',        
+        'assets/stylesheets/application.scss',
+        'widgets/clock/clock.scss',
+        'widgets/comments/comments.scss',
+        'widgets/graph/graph.scss',
+        'widgets/iframe/iframe.scss',
+        'widgets/image/image.scss',
+        'widgets/list/list.scss',
+        'widgets/meter/meter.scss',
+        'widgets/number/number.scss',
+        'widgets/text/text.scss',
     ]
-    output = ''
+    output = []
     for path in scripts:
-        output = output + open(path).read()
+        output.append('/* CSS: %s */\n' % path)
+        if '.scss' in path:
+            log.info('Compiling Scss for %s ' % path)
+            css = Scss()
+            contents = css.compile(open(path).read())
+        else:
+            f = open(path)
+            contents = f.read()
+            f.close()
+
+        output.append(contents)
     return Response(output, mimetype='text/css')
 
 @app.route('/assets/images/<path:filename>')

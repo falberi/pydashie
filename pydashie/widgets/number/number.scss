@@ -4,17 +4,17 @@
 $background-color:  #47bbb3;
 $value-color:       #fff;
 
-$title-color:       rgba(255, 255, 255, 0.7);;
-$moreinfo-color:    rgba(255, 255, 255, 0.7);;
+$title-color:       rgba(255, 255, 255, 0.7);
+$moreinfo-color:    rgba(255, 255, 255, 0.7);
 
 // ----------------------------------------------------------------------------
 // Widget-number styles
 // ----------------------------------------------------------------------------
-.widget-number { 
+.widget-number {
 
   background-color: $background-color;
-  
-  .title { 
+
+  .title {
     color: $title-color;
   }
 
@@ -35,5 +35,5 @@ $moreinfo-color:    rgba(255, 255, 255, 0.7);;
   .updated-at {
     color: rgba(0, 0, 0, 0.3);
   }
-  
+
 }
