@@ -51,9 +51,6 @@ def javascripts():
             'widgets/number/number.coffee',
             'widgets/text/text.coffee',
         ]
-        nizzle = True
-        if not nizzle:
-            scripts = ['assets/javascripts/application.js']
 
         output = []
         for path in scripts:
@@ -68,53 +65,46 @@ def javascripts():
 
             output.append(contents)
 
-        if nizzle:
-            f = open('/tmp/foo.js', 'w')
-            for o in output:
-                print >> f, o
-            f.close()
-
-            f = open('/tmp/foo.js', 'rb')
-            output = f.read()
-            f.close()
-            current_app.javascripts = output
-        else:
-            current_app.javascripts = ''.join(output)
-
+        current_app.javascripts = output
 
     return Response(current_app.javascripts, mimetype='application/javascript')
 
 @app.route('/assets/application.css')
 def application_css():
-    from scss import Scss
-    scripts = [
-        'assets/stylesheets/font-awesome.css',
-        'assets/stylesheets/jquery.gridster.css',
-        'assets/stylesheets/application.scss',
-        'widgets/clock/clock.scss',
-        'widgets/comments/comments.scss',
-        'widgets/graph/graph.scss',
-        'widgets/iframe/iframe.scss',
-        'widgets/image/image.scss',
-        'widgets/list/list.scss',
-        'widgets/meter/meter.scss',
-        'widgets/number/number.scss',
-        'widgets/text/text.scss',
-    ]
-    output = []
-    for path in scripts:
-        output.append('/* CSS: %s */\n' % path)
-        if '.scss' in path:
-            log.info('Compiling Scss for %s ' % path)
-            css = Scss()
-            contents = css.compile(open(path).read())
-        else:
-            f = open(path)
-            contents = f.read()
-            f.close()
+    if not hasattr(current_app, 'stylesheets'):
+        from scss import Scss
+        scripts = [
+            'assets/stylesheets/font-awesome.css',
+            'assets/stylesheets/jquery.gridster.css',
+            'assets/stylesheets/application.scss',
+            'widgets/clock/clock.scss',
+            'widgets/comments/comments.scss',
+            'widgets/graph/graph.scss',
+            'widgets/iframe/iframe.scss',
+            'widgets/image/image.scss',
+            'widgets/list/list.scss',
+            'widgets/meter/meter.scss',
+            'widgets/number/number.scss',
+            'widgets/text/text.scss',
+        ]
 
-        output.append(contents)
-    return Response(output, mimetype='text/css')
+        output = []
+        for path in scripts:
+            output.append('/* CSS: %s */\n' % path)
+            if '.scss' in path:
+                log.info('Compiling Scss for %s ' % path)
+                css = Scss()
+                contents = css.compile(open(path).read())
+            else:
+                f = open(path)
+                contents = f.read()
+                f.close()
+
+            output.append(contents)
+
+        current_app.stylesheets = output
+
+    return Response(current_app.stylesheets, mimetype='text/css')
 
 @app.route('/assets/images/<path:filename>')
 def send_static_img(filename):
