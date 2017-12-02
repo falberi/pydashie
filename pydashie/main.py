@@ -89,7 +89,7 @@ def application_css():
     from scss import Scss
     scripts = [
         'assets/stylesheets/font-awesome.css',
-        'assets/stylesheets/jquery.gridster.css',        
+        'assets/stylesheets/jquery.gridster.css',
         'assets/stylesheets/application.scss',
         'widgets/clock/clock.scss',
         'widgets/comments/comments.scss',
@@ -186,6 +186,11 @@ def run_sample_app():
     import example_app
     example_app.run(app, xyzzy)
 
+def run_app():
+    import SocketServer
+    SocketServer.BaseServer.handle_error = close_stream
+    import my_app
+    my_app.run(app, xyzzy)
 
 if __name__ == "__main__":
-    run_sample_app()
+    run_app()

@@ -3,3 +3,4 @@
 *.pyc
 *Thumbs.db
 .ftpconfig
+config.py
